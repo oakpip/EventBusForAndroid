@@ -16,6 +16,8 @@ EventBus...
  * is tiny (~50k jar)
  * is proven in practice by apps with 100,000,000+ installs
  * has advanced features like delivery threads, subscriber priorities, etc.
+ * increase auto unregister feature
+ * increase send msg for one channel feature
 
  [![Build Status](https://travis-ci.org/greenrobot/EventBus.svg?branch=master)](https://travis-ci.org/greenrobot/EventBus)
 
@@ -50,6 +52,14 @@ EventBus in 3 steps
     }
     ```
 
+    ```java
+        // for android
+        EventBus.getDefault().register(this, lifecycle);
+        // so not need call unregister(this);
+
+         @Subscribe(threadMode = ThreadMode.MAIN, channel = "attention")
+         public void onAttentionMessage(String msg) {/* Do something */}
+    ```
 3. Post events:
 
    ```java

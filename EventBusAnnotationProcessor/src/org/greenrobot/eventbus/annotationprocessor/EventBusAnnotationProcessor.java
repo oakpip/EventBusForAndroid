@@ -52,7 +52,9 @@ public class EventBusAnnotationProcessor extends AbstractProcessor {
     public static final String OPTION_EVENT_BUS_INDEX = "eventBusIndex";
     public static final String OPTION_VERBOSE = "verbose";
 
-    /** Found subscriber methods for a class (without superclasses). */
+    /**
+     * Found subscriber methods for a class (without superclasses).
+     */
     private final ListMap<TypeElement, ExecutableElement> methodsByClass = new ListMap<>();
     private final Set<TypeElement> classesToSkip = new HashSet<>();
 
@@ -284,14 +286,9 @@ public class EventBusAnnotationProcessor extends AbstractProcessor {
             parts.add(callPrefix + "(\"" + methodName + "\",");
             String lineEnd = "),";
             if (subscribe.priority() == 0 && !subscribe.sticky()) {
-                if (subscribe.threadMode() == ThreadMode.POSTING) {
-                    parts.add(eventClass + ",");
-                    parts.add("\"" + subscribe.channel() + "\"" + lineEnd);
-                } else {
-                    parts.add(eventClass + ",");
-                    parts.add("ThreadMode." + subscribe.threadMode().name() + ",");
-                    parts.add("\"" + subscribe.channel() + "\"" + lineEnd);
-                }
+                parts.add(eventClass + ",");
+                parts.add("ThreadMode." + subscribe.threadMode().name() + ",");
+                parts.add("\"" + subscribe.channel() + "\"" + lineEnd);
             } else {
                 parts.add(eventClass + ",");
                 parts.add("ThreadMode." + subscribe.threadMode().name() + ",");

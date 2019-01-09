@@ -1,0 +1,36 @@
+buildscript {
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.1'
+    }
+
+    ext {
+        _buildToolsVersion = '28.0.3' // When updating, don't forget to adjust .travis.yml
+        _compileSdkVersion = 28
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        mavenCentral()
+        google()
+    }
+}
+
+if (JavaVersion.current().isJava8Compatible()) {
+    allprojects {
+        tasks.withType(Javadoc) {
+            options.addStringOption('Xdoclint:none', '-quiet')
+        }
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.10.2'
+    distributionType = org.gradle.api.tasks.wrapper.Wrapper.DistributionType.ALL
+}
